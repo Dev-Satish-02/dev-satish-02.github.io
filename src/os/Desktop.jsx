@@ -16,6 +16,7 @@ import FinderApp from './apps/FinderApp';
 import SocialApp from './apps/SocialApp';
 import SpotifyApp from './apps/SpotifyApp';
 import PreviewApp, { downloadResume } from './apps/PreviewApp';
+import PhotosApp from './apps/PhotosApp';
 
 const NAMES = {
   finder: 'Finder',
@@ -30,6 +31,7 @@ const NAMES = {
   weather: 'Weather',
   spotify: 'Spotify',
   preview: 'Preview',
+  photos: 'Photos',
   aboutmac: 'About This Mac',
   readme: 'TextEdit',
 };
@@ -40,20 +42,28 @@ function initialFrames() {
   const W = window.innerWidth;
   const H = window.innerHeight;
   const roomy = W >= 1180;
-  // Notes is the one window that opens with the site, so it sits in the middle and has room
-  const nw = Math.min(1120, W - 120);
-  const nh = Math.min(800, H - 150);
+  // on a roomy screen the desk opens like a desk in use: Notes on the left, Claude top right,
+  // LinkedIn bottom right and Terminal in front; on a smaller one, just Notes in the middle
+  const nw = roomy ? Math.round(W * 0.53) : Math.min(1120, W - 120);
+  const nh = roomy ? Math.round(H * 0.73) : Math.min(800, H - 150);
   return {
-    notes: { x: Math.round((W - nw) / 2), y: 48, w: nw, h: nh },
+    notes: roomy ? { x: 0, y: Math.round(H * 0.09), w: nw, h: nh } : { x: Math.round((W - nw) / 2), y: 48, w: nw, h: nh },
+    claude: roomy
+      ? { x: Math.round(W * 0.505), y: 28, w: Math.round(W * 0.375), h: Math.round(H * 0.6) }
+      : { x: -8, y: Math.round(H * 0.6), w: Math.round(W * 0.46), h: Math.round(H * 0.4) - 92 },
+    linkedin: roomy
+      ? { x: Math.round(W * 0.57), y: Math.round(H * 0.436), w: Math.round(W * 0.43), h: Math.round(H * 0.564) }
+      : { x: Math.round(W * 0.34), y: 70, w: Math.min(820, W - 80), h: Math.min(680, H - 170) },
+    terminal: roomy
+      ? { x: Math.round(W * 0.225), y: Math.round(H * 0.663), w: Math.round(W * 0.355), h: Math.round(H * 0.337) }
+      : { x: Math.round(W * 0.25), y: 160, w: Math.min(680, W - 160), h: 400 },
     messages: { x: Math.round(W * 0.535), y: 68, w: Math.min(820, Math.round(W * 0.93 - W * 0.535)), h: Math.round(H * 0.56) },
     // keeps clear of the desktop icons' column on the right, so read-me and the résumé stay clickable
     settings: { x: W - 130 - Math.min(560, Math.round(W * 0.34)), y: Math.round(H * 0.14), w: Math.min(560, Math.round(W * 0.34)), h: Math.round(H * 0.6) },
-    claude: { x: -8, y: Math.round(H * 0.6), w: Math.round(W * 0.46), h: Math.round(H * 0.4) - 92 },
     finder: { x: Math.round(W * 0.2), y: 120, w: 720, h: 440 },
-    terminal: { x: Math.round(W * 0.25), y: 160, w: Math.min(680, W - 160), h: 400 },
+    photos: { x: Math.max(20, Math.round(W / 2 - Math.min(960, W - 80) / 2)), y: 50, w: Math.min(960, W - 80), h: Math.min(700, H - 150) },
     readme: { x: W - 540, y: 110, w: 440, h: 360 },
     github: { x: Math.max(20, Math.round(W * 0.2)), y: 60, w: Math.min(1060, W - 60), h: Math.min(720, H - 160) },
-    linkedin: { x: Math.round(W * 0.34), y: 70, w: Math.min(820, W - 80), h: Math.min(680, H - 170) },
     twitter: { x: Math.max(20, Math.round(W * 0.3)), y: 70, w: Math.min(860, W - 60), h: Math.min(700, H - 170) },
     weather: { x: Math.round(W * 0.42), y: 64, w: Math.min(820, W - 80), h: Math.min(600, H - 170) },
     spotify: { x: Math.max(20, Math.round(W * 0.24)), y: 56, w: Math.min(1000, W - 60), h: Math.min(720, H - 150) },
@@ -314,6 +324,7 @@ function TextEdit({ file }) {
 const DOCK = [
   { id: 'finder', app: 'finder' },
   { id: 'notes', app: 'notes' },
+  { id: 'photos', app: 'photos' },
   { id: 'claude', app: 'claude' },
   ...SOCIALS.map((s) => ({ id: s.label.toLowerCase(), app: s.label.toLowerCase() })),
   { id: 'messages', app: 'messages' },
@@ -409,20 +420,22 @@ export default function Desktop({ noteId, openNote, resume }) {
   const [wins, setWins] = useState(() => {
     const roomy = frames.roomy;
     return {
-      // only Notes, which holds the substance, is open on arrival; every other app is one click away
-      messages: { open: false, z: 2 },
-      settings: { open: false, z: 3 },
-      claude: { open: false, z: 4 },
-      notes: { open: true, z: 5 },
+      // on arrival: Notes (the substance), Claude (ask about Dev), LinkedIn and Terminal in front;
+      // a small screen gets Notes alone
+      claude: { open: roomy, z: 2 },
+      notes: { open: true, z: 3 },
+      linkedin: { open: roomy, z: 4 },
+      terminal: { open: roomy, z: 5 },
+      messages: { open: false, z: 1 },
+      settings: { open: false, z: 1 },
+      photos: { open: false, z: 1 },
       finder: { open: false, z: 1 },
       weather: { open: false, z: 1 },
       spotify: { open: false, z: 1 },
       preview: { open: false, z: 1 },
       aboutmac: { open: false, z: 1 },
-      terminal: { open: false, z: 1 },
       readme: { open: false, z: 1 },
       github: { open: false, z: 1 },
-      linkedin: { open: false, z: 1 },
       twitter: { open: false, z: 1 },
     };
   });
@@ -532,6 +545,7 @@ export default function Desktop({ noteId, openNote, resume }) {
     claude: <ClaudeApp layout="desktop" />,
     settings: <SettingsApp key={settingsPage} layout="desktop" resume={resume} start={settingsPage} />,
     preview: <PreviewApp layout="desktop" />,
+    photos: <PhotosApp layout="desktop" onOpenNote={showNote} />,
     terminal: <TerminalApp layout="desktop" openNote={showNote} openApp={onApp} openFile={openFile} resume={resume} />,
     readme: <TextEdit file={textFile} />,
     weather: <WeatherApp />,
