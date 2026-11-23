@@ -65,9 +65,10 @@ function run(line, { openNote, openApp, openFile, fs, cwd, setCwd }) {
         '',
         ...SKILL_GROUPS.map((g) => `${g.title}: ${g.items.join(', ')}`),
       ];
-    case 'writing':
-    case 'ls':
-      return NOTES.filter((n) => n.group === 'Writing').map((n) => `${n.meta.padEnd(14)}${n.title}`);
+    case 'writing': {
+      const posts = NOTES.filter((n) => n.group === 'Writing');
+      return posts.length ? posts.map((n) => `${n.meta.padEnd(14)}${n.title}`) : ['No posts yet.'];
+    }
     case 'contact':
       return [`email  ${PROFILE.email}`, `phone  ${PROFILE.phone}`, ...SOCIALS.map((s) => `${s.label.toLowerCase().padEnd(7)}${s.href}`)];
     case 'open': {

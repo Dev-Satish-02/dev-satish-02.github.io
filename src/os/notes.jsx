@@ -3,6 +3,7 @@ import MDXComponents from '../components/MDXComponents';
 import { ACHIEVEMENTS, EDUCATION, EXPERIENCE, POSITIONS, PROFILE, PROJECTS, SKILL_GROUPS, SOCIALS } from '../data/content';
 import { formatDate, getAllPosts } from '../lib/blog';
 import { viewResume } from './apps/PreviewApp';
+import { Metrics } from './lib/metrics';
 
 /* Every section of the portfolio is a note. The desktop's Notes window, the phone's Notes app,
    the terminal and the home-screen shortcuts all read this one list. */
@@ -14,6 +15,16 @@ function Go({ to, open, children }) {
     </button>
   );
 }
+
+// the numbers a skimming reader should leave with
+const STATS = [
+  ['10,000+', 'documents processed in an AI research workspace'],
+  ['40%', 'less time for analysts to evaluate a company'],
+  ['700+', 'students supported through campus placements'],
+  ['INR 7L+', 'revenue from the Yearbook Portal'],
+  ['35.9%', 'less task time for warehouse robots with NEXUS'],
+  ['13×', 'faster outreach per company, 2.25 min to 10 s'],
+];
 
 // the résumé, as a real download a recruiter can save
 export function ResumeButton({ resume }) {
@@ -41,9 +52,17 @@ function About({ open, resume }) {
         Most recently I was an AI Engineering Intern at Callistra AI, building a research workspace that
         processes 10,000+ documents for financial analysts. Before that, trading systems in Python at Sysstra,
         operations at Aditya Birla Group and the founder&apos;s office at Anitum. On campus I coordinate placements for 700+ students and launched the
-        Yearbook Portal, which brought in INR 7L+.
+        Yearbook Portal, which brought in INR 7L+. My latest project, Synex, reached the finals of ContextCon 05.
       </p>
       <ResumeButton resume={resume} />
+      <ul className="note-stats" aria-label="Key numbers">
+        {STATS.map(([n, label]) => (
+          <li key={label}>
+            <b>{n}</b>
+            <span>{label}</span>
+          </li>
+        ))}
+      </ul>
       <h3>What I&apos;m after</h3>
       <p>
         Work where product, strategy and engineering meet: figuring out what to build, why it matters, and then
@@ -85,7 +104,9 @@ function Experience() {
           {e.about && <p className="note-about">{e.about}</p>}
           <ul>
             {e.bullets.map((b) => (
-              <li key={b}>{b}</li>
+              <li key={b}>
+                <Metrics text={b} />
+              </li>
             ))}
           </ul>
           {e.tags?.length > 0 && <p className="note-tags">{e.tags.map((t) => <span key={t}>{t}</span>)}</p>}
@@ -98,37 +119,27 @@ function Experience() {
 function Projects() {
   return (
     <>
-      <p>From my latest résumé: what I built, and what happened when people used it.</p>
+      <p>Each one told as the problem, what I did and the result, with the numbers that matter.</p>
       {PROJECTS.map((p) => (
         <section key={p.name} className="note-block">
           <h3>{p.name}</h3>
           <p className="note-sub">
-            {p.kind} <span className="note-when">{p.metric}</span>
+            {p.kind} <span className="note-pill">{p.metric}</span>
           </p>
-          {p.shot && (
-            <img
-              className="note-img"
-              src={`${import.meta.env.BASE_URL}${p.shot.src}`}
-              alt={p.shot.alt}
-              loading="lazy"
-              decoding="async"
-            />
-          )}
-          {p.bullets ? (
-            <ul>
-              {p.bullets.map((b) => (
-                <li key={b}>{b}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>{p.blurb}</p>
-          )}
+          {p.about && <p className="note-about">{p.about}</p>}
+          <ul>
+            {(p.bullets || [p.blurb]).map((b) => (
+              <li key={b}>
+                <Metrics text={b} />
+              </li>
+            ))}
+          </ul>
           {p.stack.length > 0 && <p className="note-tags">{p.stack.map((t) => <span key={t}>{t}</span>)}</p>}
           {p.links.length > 0 && (
-            <p>
+            <p className="note-links">
               {p.links.map((l) => (
-                <a key={l.href} href={l.href} target="_blank" rel="noreferrer">
-                  Open on {l.label}
+                <a key={l.href} className="note-link-btn" href={l.href} target="_blank" rel="noreferrer">
+                  {l.label} <span aria-hidden="true">↗</span>
                 </a>
               ))}
             </p>
@@ -154,7 +165,7 @@ function Skills() {
       <ul>
         {ACHIEVEMENTS.map(([who, what]) => (
           <li key={who}>
-            <strong>{who}</strong>: {what}
+            <strong>{who}</strong>: <Metrics text={what} />
           </li>
         ))}
       </ul>

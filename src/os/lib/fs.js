@@ -70,7 +70,7 @@ export function makeFS(resume) {
       },
       { name: 'Downloads', type: 'dir', children: pdf },
       { name: 'Projects', type: 'dir', children: PROJECTS.map((p) => ({ name: p.name, type: 'file', ext: 'note', note: 'projects' })) },
-      { name: 'Writing', type: 'dir', children: posts() },
+      ...(posts().length ? [{ name: 'Writing', type: 'dir', children: posts() }] : []),
       { name: 'about.txt', type: 'file', ext: 'txt', text: ABOUT },
       { name: 'contact.txt', type: 'file', ext: 'txt', text: CONTACT },
     ],

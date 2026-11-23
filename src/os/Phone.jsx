@@ -125,7 +125,7 @@ export default function Phone({ noteId, openNote, resume, startApp }) {
     { id: 'experience', label: 'Experience', go: (e) => launch(e, 'notes', 'experience') },
     { id: 'projects', label: 'Projects', go: (e) => launch(e, 'notes', 'projects') },
     { id: 'skills', label: 'Skills and education', go: (e) => launch(e, 'notes', 'skills') },
-    { id: 'writing', label: 'Writing', go: (e) => launch(e, 'notes', firstPost) },
+    ...(firstPost ? [{ id: 'writing', label: 'Writing', go: (e) => launch(e, 'notes', firstPost) }] : []),
     ...SOCIALS.map((s) => ({ id: s.label.toLowerCase(), label: s.label === 'Twitter' ? 'X' : s.label, go: (e) => launch(e, s.label.toLowerCase()) })),
     { id: 'settings', label: 'Settings', go: (e) => launch(e, 'settings') },
   ];

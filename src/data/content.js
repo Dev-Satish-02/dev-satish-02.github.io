@@ -116,42 +116,81 @@ export const POSITIONS = [
   },
 ];
 
-// The Yearbook is from the latest résumé; the rest come from Dev's public repositories and earlier résumés.
+// Each project is told as Situation and Task (`about`), then Action and Result (`bullets`), with the
+// numbers that matter. The Yearbook, TagYourSnap and PU Outreach figures come from the latest résumé;
+// the rest from each project's own repository and live site.
 export const PROJECTS = [
   {
-    name: 'The Yearbook',
-    kind: 'A Yearbook Portal to digitize submissions and streamline creation of the final physical yearbook',
-    blurb: 'Led the Yearbook Portal launch, onboarding 80% of the batch and generating INR 7L+ in revenue by digitizing submissions.',
+    name: 'Synex',
+    kind: 'Finalist, ContextCon 05',
+    blurb: 'An agent that replaces an expert-network call: ask a business question, get compliance-cleared, anonymised answers from former insiders.',
+    about:
+      'ContextCon 05, run by Crustdata with Y Combinator at BITS Pilani, asked teams to replace a paid service with an agent on live data. Expert networks such as GLG and AlphaSights charge by the call hour to connect funds and consultancies with former company insiders.',
+    metric: 'Finalist, 154 tests passing',
+    bullets: [
+      'Built Synex with a teammate in one build day: an 8-stage pipeline that turns one business question into a panel of former employees found through Crustdata live people and company data, with cited, anonymised answers.',
+      'Wrote 7 compliance rules in code (cooling-off, tenure, competitor conflict and more), each citing the field, value and record date it used, plus a hash-chained audit trail and exactly-once email sending that survives a hard process kill.',
+      'Reached the finals with 154 passing tests, including 3 real-record cases (a clean pass, a still-employed fail and a missing-data case), at a quoted price of ₹8,000 per answered sub-question, with a person approving the plan and every invitation.',
+    ],
+    stack: ['Python', 'FastAPI', 'Next.js', 'Claude Haiku 4.5', 'Crustdata'],
+    links: [{ label: 'GitHub', href: 'https://github.com/team-ananya-dev/Synex' }],
+  },
+  {
+    name: 'Yearbook Portal',
+    kind: 'BITS Pilani Alumni Relations Cell',
+    blurb: 'An online yearbook for the whole batch: profiles, quotes written on friends’ walls, and an opt-in for the physical copy.',
+    about:
+      'Yearbook submissions and the final physical yearbook were put together by hand. The task was to move submissions online and get the whole batch to take part.',
     metric: 'INR 7L+ revenue, 9,000+ quotes',
     bullets: [
-      'Led the Yearbook Portal launch, onboarding 80% of the batch and generating INR 7L+ in revenue by digitizing submissions.',
-      'Doubled engagement (2×) in just one week by shipping new interactive features prioritized through rapid user feedback loops.',
-      'Cut manual effort by 90%+ and scaled adoption to 9,000+ quotes through digitized workflows and targeted student outreach.',
+      'Led the portal launch: students log in with their BITS email, add a picture and quote, write on friends’ walls and opt in for the physical yearbook.',
+      'Doubled engagement (2×) in one week by shipping new interactive features, prioritized through rapid user feedback loops.',
+      'Onboarded 80% of the batch, generated INR 7L+ in revenue and cut manual effort by 90%+, scaling adoption to 9,000+ quotes through digitized workflows and targeted student outreach.',
     ],
     stack: [],
-    links: [{ label: 'Snaps', href: 'https://snaps-dun.vercel.app' }],
+    links: [{ label: 'Yearbook Portal', href: 'https://yearbook.bits-sarc.in/' }],
+  },
+  {
+    name: 'TagYourSnap',
+    kind: 'BITS Pilani Alumni Relations Cell',
+    blurb: 'A login, recognise and tag flow for the photos from Batch Snaps, the flagship 2-day event.',
+    about:
+      'Batch Snaps is the Alumni Relations Cell’s flagship 2-day event, with formal department snaps with professors and informal snaps across campus. The task was to help students find and tag themselves in the photos.',
+    metric: '700+ snaps, 500+ students',
+    bullets: [
+      'Led the TagYourSnap launch alongside the Yearbook Portal, built around a simple login, recognise and tag flow.',
+      'Executed Batch Snaps end to end with the Alumni Relations office, coordinating 500+ students and 50+ faculty over 2 days.',
+      'Drove 700+ snaps and enabled interaction across 80%+ of the batch.',
+    ],
+    stack: [],
+    links: [{ label: 'TagYourSnap', href: 'https://snaps-dun.vercel.app/' }],
   },
   {
     name: 'PU Outreach',
-    kind: 'AI outreach tool for the BITS Pilani Placement Unit',
+    kind: 'BITS Pilani Placement Unit',
     blurb: 'Screenshot a LinkedIn profile, get a tracker row and a Gmail draft; a person reviews and sends every email.',
-    metric: '2.25 min to 10 s per company',
+    about:
+      'Inviting a company to campus placements meant finding a contact on LinkedIn, copying the details into a tracker and pasting the same email again, about 2.25 minutes per company. The task was to remove that repetition without letting an AI send email.',
+    metric: '2.25 min to 10 s, 13× faster',
     bullets: [
-      'Turns a LinkedIn screenshot into a Google Sheets row and a drafted pitch email, with local OCR and a human approving every send.',
-      'Cut per-company outreach time from 2.25 minutes to 10 seconds for the Placement Unit.',
+      'Built PU Outreach: a screenshot goes through local OCR into a Google Sheets row and a drafted pitch email, and the tool never sends mail by itself.',
+      'Kept a person in charge of every email, so each message is reviewed before it leaves.',
+      'Cut per-company outreach time from 2.25 min to 10 s, about 13× faster, for the Placement Unit.',
     ],
     stack: ['Python', 'Google Apps Script', 'Tesseract OCR'],
     links: [{ label: 'GitHub', href: 'https://github.com/Dev-Satish-02/PU-Outreach' }],
   },
   {
-    name: 'NEXUS: AMR Fleet Coordination',
-    kind: 'Smart India Hackathon 2026, problem statement SIH26123',
-    blurb: 'Decentralized coordination for warehouse robots: each robot plans with its neighbours peer-to-peer, with no central traffic controller.',
-    metric: 'Up to 24% faster than zone locking',
+    name: 'NEXUS',
+    kind: 'Smart India Hackathon 2026, SIH26123',
+    blurb: 'Decentralized coordination for warehouse robots: each robot plans with its neighbours, with no central traffic controller.',
+    about:
+      'Warehouse robots usually queue behind a central traffic controller or zone locks. The problem statement asked for edge-AI coordination of autonomous mobile robots without one.',
+    metric: '35.9% faster, 66% fewer stops',
     bullets: [
-      'Every robot runs the same agent and shares its position and intent peer-to-peer, with no central traffic controller.',
-      'Includes a lane-based multi-robot warehouse simulator, a live fleet dashboard, a layout editor and a benchmark harness.',
-      'Finished a 12-robot intersection scenario in 362 s against 476 s for classical zone locking.',
+      'Built a peer-to-peer agent that every robot runs, sharing position and intent with its neighbours, plus a multi-robot simulator, a live control room and a benchmark harness.',
+      'Benchmarked it against classical zone locking across 9 scenarios and 3 random seeds each.',
+      'Cut total task completion time by 35.9%, with 66% fewer full stops and zero collisions in every run; the 12-robot intersection finished in 362 s against 476 s.',
     ],
     stack: ['Python'],
     links: [
@@ -161,43 +200,29 @@ export const PROJECTS = [
   },
   {
     name: 'Stadium Evacuation Models',
-    kind: 'Crowd-flow and emergency-evacuation simulation',
+    kind: 'Crowd-flow simulation',
     blurb: 'A Python framework comparing four crowd-flow models on the same stadiums, crowds and scenarios.',
-    metric: '4 models, 40,000+ person crowds',
+    about:
+      'Evacuation results depend heavily on which crowd model is used. The task was to compare models fairly, changing only the model, on stadiums with tens of thousands of people.',
+    metric: '4 models, 41,355-person crowd',
     bullets: [
-      'Builds parametric stadiums from YAML: a 41,355-person football bowl, a 40,603-person cricket oval and an indoor arena.',
-      'Generates seeded crowds with mobility classes, walking speeds and pre-movement delays, then runs four models on identical crowds.',
+      'Built 3 parametric stadiums (a 41,355-person football bowl, a 40,603-person cricket oval and a 7,771-person arena) with seeded crowds and mobility classes.',
+      'Ran 4 models on identical crowds: hydraulic, cellular automaton, social force and queueing network.',
+      'Ran 24 evacuations in which everyone got out, and found the fastest and slowest models differed by 11 to 30% in an emergency and up to 42% with two gates blocked.',
     ],
-    stack: ['Python'],
+    stack: ['Python', 'Numba'],
     links: [{ label: 'GitHub', href: 'https://github.com/Dev-Satish-02/stadium-evac' }],
   },
   {
-    name: 'BITS Mess Portal',
-    kind: 'Campus product',
-    blurb: 'Menus, ratings and feedback for the BITS Pilani mess, launched to the whole campus.',
-    metric: '2,000+ users in 7 days',
-    stack: ['React', 'REST API'],
-    links: [
-      { label: 'Live', href: 'https://mess-menu-seven.vercel.app' },
-      { label: 'GitHub', href: 'https://github.com/Dev-Satish-02/mess-dev' },
-    ],
-  },
-  {
-    name: 'Readmebot',
-    kind: 'Developer tool on npm',
-    blurb: 'A command-line tool that reads a codebase and writes a polished README.md with AI.',
-    metric: 'Published on npm',
-    stack: ['Node.js', 'OpenAI'],
-    links: [
-      { label: 'npm', href: 'https://www.npmjs.com/package/readmebot' },
-      { label: 'GitHub', href: 'https://github.com/Dev-Satish-02/readmebot' },
-    ],
-  },
-  {
     name: 'Corrosion Detector',
-    kind: 'Computer vision, built during the Aditya Birla Group internship',
-    blurb: 'A browser app that flags pipe corrosion from live camera feeds, using a model trained on 4,000+ images.',
+    kind: 'Computer vision',
+    blurb: 'A browser app that flags pipe corrosion from live camera feeds.',
+    about: 'Pipe corrosion in a plant needs constant inspection. The task was to flag it automatically from camera feeds.',
     metric: '4,000+ training images',
+    bullets: [
+      'Trained a corrosion-detection model on 4,000+ images.',
+      'Built a browser app that runs it on live camera feeds and flags defects as they appear.',
+    ],
     stack: ['TensorFlow.js', 'Python', 'OpenCV'],
     links: [
       { label: 'Live', href: 'https://rust-detector.vercel.app' },
@@ -205,14 +230,51 @@ export const PROJECTS = [
     ],
   },
   {
+    name: 'BITS Mess Portal',
+    kind: 'Campus product',
+    blurb: 'Menus, ratings and feedback for the BITS Pilani mess, launched to the whole campus.',
+    about: 'The BITS Pilani mess menu and student feedback needed a campus-wide home online. The task was to launch one for everyone.',
+    metric: '2,000+ users in 7 days',
+    bullets: [
+      'Built and launched a web app with menus, ratings and feedback.',
+      'Reached 2,000+ users within 7 days of launch.',
+    ],
+    stack: ['React', 'REST API'],
+    links: [
+      { label: 'Live', href: 'https://mess-menu-seven.vercel.app' },
+      { label: 'GitHub', href: 'https://github.com/Dev-Satish-02/mess-dev' },
+    ],
+  },
+  {
     name: 'Nirmaan Pilani website',
-    kind: 'Website for the Nirmaan Organization, Pilani chapter',
-    blurb: 'Digital outreach site for Nirmaan, the student-run NGO Dev led projects for.',
-    metric: 'Live',
+    kind: 'Nirmaan Organization, Pilani chapter',
+    blurb: 'The chapter’s official site, showing its programmes and impact.',
+    about: 'Nirmaan runs education, community development and women-empowerment projects around Pilani, and needed an official site that shows its work.',
+    metric: '2,000+ beneficiaries shown',
+    bullets: [
+      'Built the chapter’s official website in Angular and TypeScript, presenting its 3 programme areas.',
+      'The site shows the chapter’s impact: 2,000+ beneficiaries, 150+ regular volunteers and 15+ areas reached.',
+    ],
     stack: ['Angular', 'TypeScript', 'Tailwind'],
     links: [
-      { label: 'Live', href: 'https://nirmaanpilani.org/' },
+      { label: 'Live', href: 'https://www.nirmaan-pilani.org/' },
       { label: 'GitHub', href: 'https://github.com/Dev-Satish-02/bits-nirmaan' },
+    ],
+  },
+  {
+    name: 'Readmebot',
+    kind: 'Developer tool on npm',
+    blurb: 'A command-line tool that reads a codebase and writes a polished README.md with AI.',
+    about: 'Writing a good README is slow and often skipped. The task was to generate one from the code itself.',
+    metric: 'Published on npm',
+    bullets: [
+      'Built a command-line tool that analyzes a project and generates a structured README.md with AI.',
+      'Published it on npm, where anyone can run it with one command.',
+    ],
+    stack: ['Node.js', 'OpenAI'],
+    links: [
+      { label: 'npm', href: 'https://www.npmjs.com/package/readmebot' },
+      { label: 'GitHub', href: 'https://github.com/Dev-Satish-02/readmebot' },
     ],
   },
 ];
