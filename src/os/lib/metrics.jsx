@@ -2,7 +2,7 @@
    money (INR 7L+, ₹8,000, Rs. 70,000), percentages and ranges (40%, 20–30%), counts (10,000+, 700+),
    multipliers (2×) and short units (sub-500 ms, 2.25 min, 10 s, 100 m³). Bare years are left alone. */
 const NUMBER =
-  /((?:INR|Rs\.?|₹)\s?)?(?<![A-Za-z0-9])~?\d[\d,]*(?:\.\d+)?(?:[–-]\d[\d,]*(?:\.\d+)?)?(?:\s?(?:%|×|ms\b|min\b|s\b|m³|[LKM]\+?))?\+?/g;
+  /((?:INR|Rs\.?|₹|\$)\s?)?(?<![A-Za-z0-9])~?\d[\d,]*(?:\.\d+)?(?:[–-]\d[\d,]*(?:\.\d+)?)?(?:\s?(?:%|×|ms\b|min\b|s\b|m³|[LKM]\+?))?\+?/g;
 
 export function Metrics({ text }) {
   const parts = [];

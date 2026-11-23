@@ -43,6 +43,7 @@ const app = (id, name) => ({ name, type: 'app', app: id });
 export const APPS = [
   app('finder', 'Finder'),
   app('notes', 'Notes'),
+  app('photos', 'Photos'),
   app('messages', 'Messages'),
   app('claude', 'Claude'),
   app('weather', 'Weather'),

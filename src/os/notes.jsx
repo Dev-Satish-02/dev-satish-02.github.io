@@ -16,16 +16,6 @@ function Go({ to, open, children }) {
   );
 }
 
-// the numbers a skimming reader should leave with
-const STATS = [
-  ['10,000+', 'documents processed in an AI research workspace'],
-  ['40%', 'less time for analysts to evaluate a company'],
-  ['700+', 'students supported through campus placements'],
-  ['INR 7L+', 'revenue from the Yearbook Portal'],
-  ['35.9%', 'less task time for warehouse robots with NEXUS'],
-  ['13×', 'faster outreach per company, 2.25 min to 10 s'],
-];
-
 // the résumé, as a real download a recruiter can save
 export function ResumeButton({ resume }) {
   if (!resume) return null;
@@ -55,14 +45,6 @@ function About({ open, resume }) {
         Yearbook Portal, which brought in INR 7L+. My latest project, Synex, reached the finals of ContextCon 05.
       </p>
       <ResumeButton resume={resume} />
-      <ul className="note-stats" aria-label="Key numbers">
-        {STATS.map(([n, label]) => (
-          <li key={label}>
-            <b>{n}</b>
-            <span>{label}</span>
-          </li>
-        ))}
-      </ul>
       <h3>What I&apos;m after</h3>
       <p>
         Work where product, strategy and engineering meet: figuring out what to build, why it matters, and then
@@ -119,7 +101,6 @@ function Experience() {
 function Projects() {
   return (
     <>
-      <p>Each one told as the problem, what I did and the result, with the numbers that matter.</p>
       {PROJECTS.map((p) => (
         <section key={p.name} className="note-block">
           <h3>{p.name}</h3>

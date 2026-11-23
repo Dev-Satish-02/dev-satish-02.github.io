@@ -9,6 +9,7 @@ const base = import.meta.env.BASE_URL;
 const REAL = {
   finder: 'finder',
   notes: 'notes',
+  photos: 'photos',
   messages: 'messages',
   mail: 'mail',
   terminal: 'terminal',

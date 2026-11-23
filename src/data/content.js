@@ -122,15 +122,13 @@ export const POSITIONS = [
 export const PROJECTS = [
   {
     name: 'Synex',
-    kind: 'Finalist, ContextCon 05',
-    blurb: 'An agent that replaces an expert-network call: ask a business question, get compliance-cleared, anonymised answers from former insiders.',
-    about:
-      'ContextCon 05, run by Crustdata with Y Combinator at BITS Pilani, asked teams to replace a paid service with an agent on live data. Expert networks such as GLG and AlphaSights charge by the call hour to connect funds and consultancies with former company insiders.',
-    metric: 'Finalist, 154 tests passing',
+    kind: 'Finalist, ContextCon 05 (Crustdata x YC)',
+    blurb: 'An 8-stage AI agent that replaces an expert-network call: it sources former employees, applies compliance rules and returns a cited answer.',
+    metric: 'Finalist, 80–94% cheaper',
     bullets: [
-      'Built Synex with a teammate in one build day: an 8-stage pipeline that turns one business question into a panel of former employees found through Crustdata live people and company data, with cited, anonymised answers.',
-      'Wrote 7 compliance rules in code (cooling-off, tenure, competitor conflict and more), each citing the field, value and record date it used, plus a hash-chained audit trail and exactly-once email sending that survives a hard process kill.',
-      'Reached the finals with 154 passing tests, including 3 real-record cases (a clean pass, a still-employed fail and a missing-data case), at a quoted price of ₹8,000 per answered sub-question, with a person approving the plan and every invitation.',
+      'Built an 8-stage AI agent replacing expert-network calls (GLG): it sources ex-employees, applies 7 compliance rules and returns a cited answer in minutes, not days.',
+      'Cut research cost by ~80–94%: ₹8,000 per answered question against ~$500–1,500 per GLG call hour; a 5-question case cost ~$0.28 in AI and data credits.',
+      'Finalist among the top 8–12 teams at ContextCon 05 (BITS Pilani): built in 7 hours, with every answer cited and confidence scored from 1 to 3+ independent experts.',
     ],
     stack: ['Python', 'FastAPI', 'Next.js', 'Claude Haiku 4.5', 'Crustdata'],
     links: [{ label: 'GitHub', href: 'https://github.com/team-ananya-dev/Synex' }],
@@ -358,3 +356,47 @@ export const SPOTIFY = {
     { id: '4Qtb2nfpa3ByU53Mi8QqxG', title: 'arunachalam' },
   ],
 };
+
+// The Photos app. Each picture is tied to the part of the résumé it shows; `note` opens that part in Notes.
+export const GALLERY = [
+  {
+    id: 'contextcon-synex',
+    title: 'ContextCon 05, Crustdata x Y Combinator',
+    caption: 'Building Synex at ContextCon 05, BITS Pilani. We made the finals, among the top 8–12 teams.',
+    date: 'Nov 2026',
+    place: 'BITS Pilani',
+    note: 'projects',
+  },
+  {
+    id: 'siemens-innovation-day',
+    title: 'Siemens Innovation Day 2026',
+    caption: 'Invited to Siemens Innovation Day 2026 in New Delhi after placing in the top 10 at BITS Pilani in the AI for the Real World Hackathon.',
+    date: '2026',
+    place: 'New Delhi',
+    note: 'skills',
+  },
+  {
+    id: 'pg-spotlight',
+    title: 'P&G Spotlight Program, Season 4',
+    caption: 'Top 47 among 5k+ students across India in the P&G Spotlight Program, which led to a summer internship offer.',
+    date: null,
+    place: null,
+    note: 'skills',
+  },
+  {
+    id: 'placement-unit',
+    title: 'Placement Unit, BITS Pilani',
+    caption: 'With the Placement Unit, where I coordinate campus placements for 700+ students and 50+ hiring companies.',
+    date: 'Since Nov 2025',
+    place: 'BITS Pilani',
+    note: 'experience',
+  },
+  {
+    id: 'sarc',
+    title: 'Student Alumni Relations Cell',
+    caption: 'With the Alumni Relations Cell, where I lead events and outreach: alumni talks for 1,000+ students, the Yearbook Portal and TagYourSnap.',
+    date: 'Since Apr 2025',
+    place: 'BITS Pilani',
+    note: 'experience',
+  },
+];

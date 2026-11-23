@@ -12,13 +12,14 @@ import SpotifyApp from './apps/SpotifyApp';
 import WeatherApp from './apps/WeatherApp';
 import SocialApp from './apps/SocialApp';
 import PreviewApp from './apps/PreviewApp';
+import PhotosApp from './apps/PhotosApp';
 
 /* On a phone the desk becomes an iPhone home screen: widgets and apps up top, four apps in the
    dock below. Each app opens full screen out of its icon and has its own way back home. */
 
 const base = import.meta.env.BASE_URL;
 const firstPost = NOTES.find((n) => n.group === 'Writing')?.id;
-const NAMES = { preview: 'Résumé', notes: 'Notes', messages: 'Messages', claude: 'Claude', settings: 'Settings', spotify: 'Spotify', weather: 'Weather', github: 'GitHub', linkedin: 'LinkedIn', twitter: 'X' };
+const NAMES = { photos: 'Photos', preview: 'Résumé', notes: 'Notes', messages: 'Messages', claude: 'Claude', settings: 'Settings', spotify: 'Spotify', weather: 'Weather', github: 'GitHub', linkedin: 'LinkedIn', twitter: 'X' };
 
 function useTime() {
   const [now, setNow] = useState(() => new Date());
@@ -119,6 +120,7 @@ export default function Phone({ noteId, openNote, resume, startApp }) {
 
   const grid = [
     { id: 'notes', label: 'Notes', go: (e) => launch(e, 'notes', null) },
+    { id: 'photos', label: 'Photos', go: (e) => launch(e, 'photos') },
     { id: 'claude', label: 'Claude', go: (e) => launch(e, 'claude') },
     { id: 'spotify', label: 'Spotify', go: (e) => launch(e, 'spotify') },
     { id: 'weather', label: 'Weather', go: (e) => launch(e, 'weather') },
@@ -206,6 +208,16 @@ export default function Phone({ noteId, openNote, resume, startApp }) {
           {app === 'spotify' && <SpotifyApp layout="phone" onClose={home} />}
           {app === 'weather' && <WeatherApp layout="phone" onClose={home} />}
           {app === 'preview' && <PreviewApp layout="phone" onClose={home} />}
+          {app === 'photos' && (
+            <PhotosApp
+              layout="phone"
+              onClose={home}
+              onOpenNote={(id) => {
+                openNote(id);
+                setApp('notes');
+              }}
+            />
+          )}
           {['github', 'linkedin', 'twitter'].includes(app) && <SocialApp network={app} layout="phone" onClose={home} />}
         </div>
       )}
