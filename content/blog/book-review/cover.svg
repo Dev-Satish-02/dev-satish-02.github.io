@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420">
-  <rect width="800" height="420" fill="#14214b"/>
-  <circle cx="660" cy="110" r="52" fill="#f1ede2"/><g fill="#c8102e"><rect x="520" y="200" width="12" height="120"/><rect x="640" y="200" width="12" height="120"/><rect x="500" y="215" width="172" height="10"/><rect x="486" y="186" width="200" height="12"/></g>
-  <text x="40" y="58" fill="#ffffff" opacity="0.8" font-family="'JetBrains Mono',monospace" font-size="14" letter-spacing="4">WRITING · BOOK REVIEW</text>
-  <rect x="40" y="76" width="56" height="3" fill="#ffffff"/>
-  <text x="40" y="360" fill="#ffffff" font-family="'Shippori Mincho B1',Georgia,serif" font-weight="800" font-size="64">Book Review</text>
-</svg>

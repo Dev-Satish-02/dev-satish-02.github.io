@@ -40,10 +40,11 @@ function initialFrames() {
   const W = window.innerWidth;
   const H = window.innerHeight;
   const roomy = W >= 1180;
-  const nw = roomy ? Math.min(1000, Math.round(W * 0.53)) : Math.min(960, W - 60);
-  const nh = Math.min(roomy ? 700 : 760, Math.round(H * (roomy ? 0.64 : 0.8)));
+  // Notes is the one window that opens with the site, so it sits in the middle and has room
+  const nw = Math.min(1120, W - 120);
+  const nh = Math.min(800, H - 150);
   return {
-    notes: { x: 14, y: 44, w: nw, h: nh },
+    notes: { x: Math.round((W - nw) / 2), y: 48, w: nw, h: nh },
     messages: { x: Math.round(W * 0.535), y: 68, w: Math.min(820, Math.round(W * 0.93 - W * 0.535)), h: Math.round(H * 0.56) },
     // keeps clear of the desktop icons' column on the right, so read-me and the résumé stay clickable
     settings: { x: W - 130 - Math.min(560, Math.round(W * 0.34)), y: Math.round(H * 0.14), w: Math.min(560, Math.round(W * 0.34)), h: Math.round(H * 0.6) },
@@ -408,9 +409,10 @@ export default function Desktop({ noteId, openNote, resume }) {
   const [wins, setWins] = useState(() => {
     const roomy = frames.roomy;
     return {
-      messages: { open: true, z: 2 },
-      settings: { open: roomy, z: 3 },
-      claude: { open: roomy, z: 4 },
+      // only Notes, which holds the substance, is open on arrival; every other app is one click away
+      messages: { open: false, z: 2 },
+      settings: { open: false, z: 3 },
+      claude: { open: false, z: 4 },
       notes: { open: true, z: 5 },
       finder: { open: false, z: 1 },
       weather: { open: false, z: 1 },

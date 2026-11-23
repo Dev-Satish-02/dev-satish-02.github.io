@@ -42,7 +42,7 @@ const THREADS = [
     pinned: p === PROJECTS[0],
     time: p.metric,
     about: p.metric,
-    messages: [`${p.name}: ${p.kind.toLowerCase()} 👇`, ...(p.bullets || [p.blurb]), ...p.links.map((l) => `${l.label}: ${l.href}`)],
+    messages: [`${p.name}: ${p.metric} 👇`, ...(p.bullets || [p.blurb]), ...p.links.map((l) => `${l.label}: ${l.href}`)],
   })),
 ];
 

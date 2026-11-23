@@ -3,6 +3,7 @@ import { marked } from 'marked';
 import { ACHIEVEMENTS, AVATAR, CERTIFICATIONS, EDUCATION, EXPERIENCE, GITHUB, LINKEDIN, PACKAGES, POSITIONS, PROFILE, PROJECTS, SKILL_GROUPS, SOCIALS, X_PROFILE } from '../../data/content';
 import { AppIcon } from '../icons';
 import { viewResume } from './PreviewApp';
+import { Metrics } from '../lib/metrics';
 
 /* Dev's profiles, opened as windows on the desk. GitHub is live (its public API allows it); the
    others show what's on the profile and link through, since those sites can't be embedded. */
@@ -264,9 +265,12 @@ function Projects() {
               <span className="gh-public">{p.metric}</span>
             </span>
             <p className="gh-project-kind">{p.kind}</p>
+            {p.about && <p className="gh-project-about">{p.about}</p>}
             <ul>
               {(p.bullets || [p.blurb]).map((b) => (
-                <li key={b}>{b}</li>
+                <li key={b}>
+                  <Metrics text={b} />
+                </li>
               ))}
             </ul>
             {(p.stack.length > 0 || p.links.length > 0) && (
@@ -550,7 +554,9 @@ function LinkedIn() {
                 {e.about && <p className="li-about">{e.about}</p>}
                 <ul>
                   {e.bullets.map((b) => (
-                    <li key={b}>{b}</li>
+                    <li key={b}>
+                      <Metrics text={b} />
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -572,7 +578,9 @@ function LinkedIn() {
                 {e.about && <p className="li-about">{e.about}</p>}
                 <ul>
                   {e.bullets.map((b) => (
-                    <li key={b}>{b}</li>
+                    <li key={b}>
+                      <Metrics text={b} />
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -614,7 +622,9 @@ function LinkedIn() {
               <Logo src={logo} name={who.startsWith('CEL') ? 'CEL' : who} />
               <div>
                 <strong>{who}</strong>
-                <p>{what}</p>
+                <p>
+                  <Metrics text={what} />
+                </p>
               </div>
             </div>
           ))}

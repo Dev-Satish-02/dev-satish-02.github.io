@@ -16,12 +16,15 @@ const ANSWERS = [
   {
     keys: ['hire', 'why', 'good', 'fit', 'strength', 'best'],
     text: () =>
-      `Three reasons. He ships: an AI research workspace at Callistra AI that processes 10,000+ documents and cut analysis time by 40%, and the Yearbook Portal, which reached 80% of his batch and brought in INR 7L+. He has range: AI engineering, Python trading systems at Sysstra, plant operations at Aditya Birla Group and a founder's office role at Anitum. And he leads: he coordinates placements for 700+ students and was top 47 of 5k+ in P&G's Spotlight Program.`,
+      `Three reasons. He ships: an AI research workspace at Callistra AI that processes 10,000+ documents and cut analysis time by 40%, and the Yearbook Portal, which reached 80% of his batch and brought in INR 7L+, and Synex, an agent that replaces an expert-network call and reached the finals of ContextCon 05. He has range: AI engineering, Python trading systems at Sysstra, plant operations at Aditya Birla Group and a founder's office role at Anitum. And he leads: he coordinates placements for 700+ students and was top 47 of 5k+ in P&G's Spotlight Program.`,
 
   },
   {
     keys: ['built', 'build', 'project', 'made', 'ship', 'portfolio'],
-    text: () => PROJECTS.map((p) => `${p.name}: ${p.blurb} (${p.metric})`).join('\n\n'),
+    text: () =>
+      PROJECTS.slice(0, 5)
+        .map((p) => `${p.name}: ${p.blurb} (${p.metric})`)
+        .join('\n\n') + `\n\n…and ${PROJECTS.length - 5} more projects in Notes.`,
   },
   {
     keys: ['work', 'experience', 'intern', 'job', 'company', 'worked'],
@@ -41,7 +44,12 @@ const ANSWERS = [
   },
   {
     keys: ['write', 'writing', 'blog', 'read', 'post'],
-    text: () => `He writes about product and strategy. Most recent: ${list(getAllPosts().slice(0, 3).map((p) => `“${p.title}”`))}. They're in Notes, under Writing.`,
+    text: () => {
+      const posts = getAllPosts();
+      return posts.length
+        ? `Most recent posts: ${list(posts.slice(0, 3).map((p) => `“${p.title}”`))}. They're in Notes, under Writing.`
+        : "He hasn't published any posts yet. They'll appear here once he does.";
+    },
   },
   {
     keys: ['who', 'about', 'dev', 'he', 'him'],
@@ -51,7 +59,6 @@ const ANSWERS = [
 
 // everything Claude needs to answer about Dev, kept short enough to travel in a link
 function profile() {
-  const posts = getAllPosts().slice(0, 4).map((p) => `- ${p.title}`);
   return [
     `You are answering questions about ${PROFILE.name} for someone visiting his portfolio. Use only these facts; if something isn't covered, say so and suggest emailing him at ${PROFILE.email}.`,
     '',
@@ -60,13 +67,11 @@ function profile() {
     'Experience:',
     ...EXPERIENCE.map((e) => `- ${e.role}, ${e.company} (${e.about}), ${e.date}: ${e.bullets.join(' ')}`),
     'Projects:',
-    ...PROJECTS.map((p) => `- ${p.name} (${p.kind}): ${(p.bullets || [p.blurb]).join(' ')}`),
+    ...PROJECTS.map((p) => `- ${p.name} (${p.kind}): ${p.blurb} Result: ${p.metric}.`),
     'Positions of responsibility:',
     ...POSITIONS.map((p) => `- ${p.role}, ${p.company}, ${p.date}: ${p.bullets.join(' ')}`),
     `Achievements: ${ACHIEVEMENTS.map(([a, b]) => `${a}: ${b}`).join(' ')}`,
     `Skills: ${SKILL_GROUPS.map((g) => `${g.title}: ${g.items.join(', ')}`).join('. ')}.`,
-    'Writing:',
-    ...posts,
     `Links: ${SOCIALS.map((s) => `${s.label} ${s.href}`).join(', ')}.`,
   ].join('\n');
 }
@@ -156,12 +161,6 @@ export default function ClaudeApp({ layout, onClose }) {
         </aside>
       )}
       <div className={`ask-main${empty ? ' is-empty' : ''}`}>
-        <header className="ask-head">
-          <span>Claude</span>
-          <a className="ask-open" href={claudeLink()} target="_blank" rel="noreferrer">
-            Open in Claude ↗
-          </a>
-        </header>
         <div className="ask-log" aria-live="polite">
           {empty && (
             <h2 className="ask-hello">
