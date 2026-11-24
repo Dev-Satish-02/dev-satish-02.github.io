@@ -15,7 +15,7 @@ export const PROFILE = {
 export const SOCIALS = [
   { label: 'GitHub', href: 'https://github.com/Dev-Satish-02' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/dev-satish' },
-  { label: 'Twitter', href: 'https://twitter.com/devtech08' },
+  { label: 'Twitter', href: 'https://x.com/devsatish08' },
 ];
 
 // From the latest résumé (public/resume.pdf). Most recent first.
@@ -131,7 +131,7 @@ export const PROJECTS = [
       'Finalist among the top 8–12 teams at ContextCon 05 (BITS Pilani): built in 7 hours, with every answer cited and confidence scored from 1 to 3+ independent experts.',
     ],
     stack: ['Python', 'FastAPI', 'Next.js', 'Claude Haiku 4.5', 'Crustdata'],
-    links: [{ label: 'GitHub', href: 'https://github.com/team-ananya-dev/Synex' }],
+    links: [{ label: 'Live', href: 'https://synex-web.onrender.com/' }, { label: 'GitHub', href: 'https://github.com/team-ananya-dev/Synex' }],
   },
   {
     name: 'Yearbook Portal',
